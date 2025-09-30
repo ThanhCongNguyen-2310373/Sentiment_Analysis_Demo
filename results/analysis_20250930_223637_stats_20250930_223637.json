@@ -1,0 +1,48 @@
+{
+  "total_tweets": 75,
+  "unique_keywords": 3,
+  "date_range": {
+    "start": "2025-08-31 22:36:26.672047",
+    "end": "2025-09-30 22:36:26.673125"
+  },
+  "sentiment_distribution": {
+    "positive": 60,
+    "negative": 10,
+    "neutral": 5
+  },
+  "sentiment_percentages": {
+    "positive": 80.0,
+    "negative": 13.33,
+    "neutral": 6.67
+  },
+  "avg_sentiment_score": 0.8179564515749613,
+  "keywords_analysis": {
+    "Copilot": {
+      "count": 20,
+      "sentiment_distribution": {
+        "positive": 13,
+        "negative": 5,
+        "neutral": 2
+      },
+      "avg_score": 0.8093273848295212
+    },
+    "ChatGPT": {
+      "count": 31,
+      "sentiment_distribution": {
+        "positive": 27,
+        "neutral": 2,
+        "negative": 2
+      },
+      "avg_score": 0.8296493099581811
+    },
+    "GPT": {
+      "count": 24,
+      "sentiment_distribution": {
+        "positive": 20,
+        "negative": 3,
+        "neutral": 1
+      },
+      "avg_score": 0.810044065117836
+    }
+  }
+}

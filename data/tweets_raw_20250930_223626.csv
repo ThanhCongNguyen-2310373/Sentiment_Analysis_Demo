@@ -1,0 +1,76 @@
+id,text,created_at,username,user_name,retweet_count,like_count,lang,keyword
+demo_tweet_0,I love using GPT-4! It's amazing for coding assistance.,2025-09-20 22:36:26.638649,demo_user_0,Demo User 0,80,412,en,Copilot
+demo_tweet_1,ChatGPT is helpful but sometimes gives wrong information.,2025-09-27 22:36:26.671763,demo_user_1,Demo User 1,42,403,en,Copilot
+demo_tweet_2,GitHub Copilot saves me so much time when programming.,2025-09-04 22:36:26.671834,demo_user_2,Demo User 2,94,28,en,ChatGPT
+demo_tweet_3,Gemini is decent but I still prefer GPT for most tasks.,2025-09-29 22:36:26.671864,demo_user_3,Demo User 3,78,22,en,ChatGPT
+demo_tweet_4,The new GPT-4o model is incredibly fast and accurate.,2025-09-02 22:36:26.671887,demo_user_4,Demo User 4,82,403,en,ChatGPT
+demo_tweet_5,Sora AI video generation is mind-blowing technology.,2025-09-23 22:36:26.671908,demo_user_5,Demo User 5,71,430,en,Copilot
+demo_tweet_6,Llama 3 open source model is surprisingly good.,2025-09-15 22:36:26.671928,demo_user_6,Demo User 6,5,138,en,GPT
+demo_tweet_7,Claude is great for writing and analysis tasks.,2025-09-29 22:36:26.671948,demo_user_7,Demo User 7,18,111,en,ChatGPT
+demo_tweet_8,AI copilots are game changers for developers.,2025-09-14 22:36:26.671967,demo_user_8,Demo User 8,22,354,en,GPT
+demo_tweet_9,These AI tools are making everyone more productive.,2025-09-12 22:36:26.671987,demo_user_9,Demo User 9,83,288,en,ChatGPT
+demo_tweet_10,"GPT sometimes hallucinates facts, need to be careful.",2025-09-26 22:36:26.672007,demo_user_10,Demo User 10,2,257,en,ChatGPT
+demo_tweet_11,Copilot suggestions are usually good but sometimes off.,2025-09-09 22:36:26.672026,demo_user_11,Demo User 11,2,228,en,ChatGPT
+demo_tweet_12,I'm worried about AI replacing human creativity.,2025-08-31 22:36:26.672047,demo_user_12,Demo User 12,72,304,en,Copilot
+demo_tweet_13,The quality of AI responses keeps getting better.,2025-09-03 22:36:26.672067,demo_user_13,Demo User 13,73,302,en,ChatGPT
+demo_tweet_14,Using multiple AI tools together gives best results.,2025-09-30 22:36:26.672086,demo_user_14,Demo User 14,72,313,en,ChatGPT
+demo_tweet_15,I love using GPT-4! It's amazing for coding assistance.,2025-09-17 22:36:26.672105,demo_user_0,Demo User 0,49,53,en,GPT
+demo_tweet_16,ChatGPT is helpful but sometimes gives wrong information.,2025-09-20 22:36:26.672124,demo_user_1,Demo User 1,88,229,en,Copilot
+demo_tweet_17,GitHub Copilot saves me so much time when programming.,2025-09-03 22:36:26.672142,demo_user_2,Demo User 2,18,460,en,ChatGPT
+demo_tweet_18,Gemini is decent but I still prefer GPT for most tasks.,2025-09-01 22:36:26.672161,demo_user_3,Demo User 3,24,429,en,GPT
+demo_tweet_19,The new GPT-4o model is incredibly fast and accurate.,2025-09-07 22:36:26.672180,demo_user_4,Demo User 4,27,382,en,ChatGPT
+demo_tweet_20,Sora AI video generation is mind-blowing technology.,2025-08-31 22:36:26.672200,demo_user_5,Demo User 5,83,181,en,Copilot
+demo_tweet_21,Llama 3 open source model is surprisingly good.,2025-09-11 22:36:26.672218,demo_user_6,Demo User 6,17,278,en,Copilot
+demo_tweet_22,Claude is great for writing and analysis tasks.,2025-09-06 22:36:26.672234,demo_user_7,Demo User 7,10,498,en,ChatGPT
+demo_tweet_23,AI copilots are game changers for developers.,2025-09-07 22:36:26.672250,demo_user_8,Demo User 8,67,269,en,GPT
+demo_tweet_24,These AI tools are making everyone more productive.,2025-09-28 22:36:26.672294,demo_user_9,Demo User 9,33,199,en,ChatGPT
+demo_tweet_25,"GPT sometimes hallucinates facts, need to be careful.",2025-09-06 22:36:26.672313,demo_user_10,Demo User 10,80,481,en,GPT
+demo_tweet_26,Copilot suggestions are usually good but sometimes off.,2025-09-15 22:36:26.672330,demo_user_11,Demo User 11,9,130,en,GPT
+demo_tweet_27,I'm worried about AI replacing human creativity.,2025-09-21 22:36:26.672347,demo_user_12,Demo User 12,42,222,en,GPT
+demo_tweet_28,The quality of AI responses keeps getting better.,2025-09-27 22:36:26.672365,demo_user_13,Demo User 13,50,12,en,GPT
+demo_tweet_29,Using multiple AI tools together gives best results.,2025-09-06 22:36:26.672381,demo_user_14,Demo User 14,92,129,en,ChatGPT
+demo_tweet_30,I love using GPT-4! It's amazing for coding assistance.,2025-09-11 22:36:26.672398,demo_user_0,Demo User 0,86,0,en,ChatGPT
+demo_tweet_31,ChatGPT is helpful but sometimes gives wrong information.,2025-09-30 22:36:26.672414,demo_user_1,Demo User 1,50,297,en,GPT
+demo_tweet_32,GitHub Copilot saves me so much time when programming.,2025-09-30 22:36:26.672430,demo_user_2,Demo User 2,21,345,en,Copilot
+demo_tweet_33,Gemini is decent but I still prefer GPT for most tasks.,2025-09-21 22:36:26.672446,demo_user_3,Demo User 3,23,391,en,ChatGPT
+demo_tweet_34,The new GPT-4o model is incredibly fast and accurate.,2025-09-09 22:36:26.672463,demo_user_4,Demo User 4,48,178,en,GPT
+demo_tweet_35,Sora AI video generation is mind-blowing technology.,2025-09-25 22:36:26.672479,demo_user_5,Demo User 5,8,32,en,GPT
+demo_tweet_36,Llama 3 open source model is surprisingly good.,2025-09-01 22:36:26.672495,demo_user_6,Demo User 6,19,247,en,ChatGPT
+demo_tweet_37,Claude is great for writing and analysis tasks.,2025-09-17 22:36:26.672511,demo_user_7,Demo User 7,64,114,en,ChatGPT
+demo_tweet_38,AI copilots are game changers for developers.,2025-09-12 22:36:26.672531,demo_user_8,Demo User 8,19,296,en,ChatGPT
+demo_tweet_39,These AI tools are making everyone more productive.,2025-09-03 22:36:26.672547,demo_user_9,Demo User 9,36,36,en,GPT
+demo_tweet_40,"GPT sometimes hallucinates facts, need to be careful.",2025-09-06 22:36:26.672564,demo_user_10,Demo User 10,19,193,en,ChatGPT
+demo_tweet_41,Copilot suggestions are usually good but sometimes off.,2025-09-24 22:36:26.672581,demo_user_11,Demo User 11,12,452,en,ChatGPT
+demo_tweet_42,I'm worried about AI replacing human creativity.,2025-09-29 22:36:26.672598,demo_user_12,Demo User 12,35,101,en,Copilot
+demo_tweet_43,The quality of AI responses keeps getting better.,2025-09-08 22:36:26.672614,demo_user_13,Demo User 13,34,128,en,ChatGPT
+demo_tweet_44,Using multiple AI tools together gives best results.,2025-09-21 22:36:26.672630,demo_user_14,Demo User 14,54,299,en,Copilot
+demo_tweet_45,I love using GPT-4! It's amazing for coding assistance.,2025-09-06 22:36:26.672646,demo_user_0,Demo User 0,12,321,en,GPT
+demo_tweet_46,ChatGPT is helpful but sometimes gives wrong information.,2025-09-01 22:36:26.672663,demo_user_1,Demo User 1,6,177,en,ChatGPT
+demo_tweet_47,GitHub Copilot saves me so much time when programming.,2025-09-08 22:36:26.672680,demo_user_2,Demo User 2,67,129,en,Copilot
+demo_tweet_48,Gemini is decent but I still prefer GPT for most tasks.,2025-08-31 22:36:26.672696,demo_user_3,Demo User 3,19,289,en,GPT
+demo_tweet_49,The new GPT-4o model is incredibly fast and accurate.,2025-09-04 22:36:26.672712,demo_user_4,Demo User 4,96,223,en,ChatGPT
+demo_tweet_50,Sora AI video generation is mind-blowing technology.,2025-09-12 22:36:26.672728,demo_user_5,Demo User 5,44,48,en,GPT
+demo_tweet_51,Llama 3 open source model is surprisingly good.,2025-09-10 22:36:26.672744,demo_user_6,Demo User 6,64,291,en,Copilot
+demo_tweet_52,Claude is great for writing and analysis tasks.,2025-09-24 22:36:26.672761,demo_user_7,Demo User 7,48,67,en,ChatGPT
+demo_tweet_53,AI copilots are game changers for developers.,2025-09-02 22:36:26.672777,demo_user_8,Demo User 8,56,416,en,GPT
+demo_tweet_54,These AI tools are making everyone more productive.,2025-08-31 22:36:26.672793,demo_user_9,Demo User 9,81,49,en,GPT
+demo_tweet_55,"GPT sometimes hallucinates facts, need to be careful.",2025-09-01 22:36:26.672810,demo_user_10,Demo User 10,49,16,en,Copilot
+demo_tweet_56,Copilot suggestions are usually good but sometimes off.,2025-09-18 22:36:26.672826,demo_user_11,Demo User 11,3,406,en,Copilot
+demo_tweet_57,I'm worried about AI replacing human creativity.,2025-09-13 22:36:26.672843,demo_user_12,Demo User 12,42,93,en,ChatGPT
+demo_tweet_58,The quality of AI responses keeps getting better.,2025-09-09 22:36:26.672859,demo_user_13,Demo User 13,84,366,en,ChatGPT
+demo_tweet_59,Using multiple AI tools together gives best results.,2025-09-27 22:36:26.672876,demo_user_14,Demo User 14,47,387,en,ChatGPT
+demo_tweet_60,I love using GPT-4! It's amazing for coding assistance.,2025-09-16 22:36:26.672892,demo_user_0,Demo User 0,49,273,en,GPT
+demo_tweet_61,ChatGPT is helpful but sometimes gives wrong information.,2025-09-08 22:36:26.672909,demo_user_1,Demo User 1,25,462,en,GPT
+demo_tweet_62,GitHub Copilot saves me so much time when programming.,2025-09-04 22:36:26.672926,demo_user_2,Demo User 2,21,285,en,GPT
+demo_tweet_63,Gemini is decent but I still prefer GPT for most tasks.,2025-09-25 22:36:26.672942,demo_user_3,Demo User 3,67,487,en,ChatGPT
+demo_tweet_64,The new GPT-4o model is incredibly fast and accurate.,2025-09-02 22:36:26.672958,demo_user_4,Demo User 4,24,108,en,Copilot
+demo_tweet_65,Sora AI video generation is mind-blowing technology.,2025-09-16 22:36:26.672977,demo_user_5,Demo User 5,49,403,en,GPT
+demo_tweet_66,Llama 3 open source model is surprisingly good.,2025-09-27 22:36:26.672994,demo_user_6,Demo User 6,15,43,en,ChatGPT
+demo_tweet_67,Claude is great for writing and analysis tasks.,2025-09-11 22:36:26.673010,demo_user_7,Demo User 7,6,188,en,Copilot
+demo_tweet_68,AI copilots are game changers for developers.,2025-09-16 22:36:26.673026,demo_user_8,Demo User 8,77,11,en,Copilot
+demo_tweet_69,These AI tools are making everyone more productive.,2025-09-13 22:36:26.673042,demo_user_9,Demo User 9,49,416,en,Copilot
+demo_tweet_70,"GPT sometimes hallucinates facts, need to be careful.",2025-09-07 22:36:26.673059,demo_user_10,Demo User 10,51,117,en,Copilot
+demo_tweet_71,Copilot suggestions are usually good but sometimes off.,2025-09-13 22:36:26.673075,demo_user_11,Demo User 11,4,14,en,GPT
+demo_tweet_72,I'm worried about AI replacing human creativity.,2025-09-02 22:36:26.673092,demo_user_12,Demo User 12,91,123,en,Copilot
+demo_tweet_73,The quality of AI responses keeps getting better.,2025-09-27 22:36:26.673108,demo_user_13,Demo User 13,40,280,en,ChatGPT
+demo_tweet_74,Using multiple AI tools together gives best results.,2025-09-30 22:36:26.673125,demo_user_14,Demo User 14,6,367,en,GPT

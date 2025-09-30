@@ -1,0 +1,37 @@
+# Core data processing libraries
+pandas>=1.5.0
+numpy>=1.24.0
+
+# Web requests and API handling
+requests>=2.28.0
+urllib3>=1.26.0
+
+# Transformers and ML libraries
+transformers>=4.21.0
+torch>=1.12.0
+tokenizers>=0.13.0
+
+# Data visualization
+matplotlib>=3.6.0
+seaborn>=0.12.0
+plotly>=5.11.0
+
+# Text processing
+nltk>=3.8
+regex>=2022.10.31
+
+# Progress bars and utilities
+tqdm>=4.64.0
+
+# Jupyter notebook support
+jupyter>=1.0.0
+ipykernel>=6.16.0
+
+# Configuration and environment
+python-dotenv>=0.21.0
+
+# Data validation
+jsonschema>=4.17.0
+
+# Optional: For better performance
+accelerate>=0.21.0
