@@ -43,48 +43,151 @@ sentiment-analysis-project/
 └── README.md              # Tài liệu này
 ```
 
+## Yêu cầu hệ thống
+
+### System Requirements
+- **Python**: 3.8+ (Đã test trên Python 3.13.7)
+- **RAM**: Tối thiểu 4GB, khuyến nghị 8GB+
+- **Disk**: 2GB free space (cho models và data)
+- **OS**: Windows 10/11, macOS, Linux
+- **Internet**: Cần để download models và API calls
+
+### Package Dependencies
+```
+pandas>=1.5.0          # Data manipulation
+numpy>=1.24.0           # Numerical computing  
+torch>=2.0.0            # Deep learning framework
+transformers>=4.30.0    # Hugging Face models
+matplotlib>=3.7.0       # Basic plotting
+seaborn>=0.12.0         # Statistical visualization
+plotly>=5.15.0          # Interactive charts
+requests>=2.31.0        # HTTP requests
+python-dotenv>=1.0.0    # Environment variables
+nltk>=3.8.0             # Natural language toolkit
+jupyter>=1.0.0          # Notebook interface (optional)
+```
+
 ## Cài đặt
 
 ### 1. Clone repository
 ```bash
-git clone <repository-url>
-cd sentiment-analysis-project
+git clone https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo.git
+cd Sentiment_Analysis_Demo
 ```
 
 ### 2. Tạo môi trường ảo (khuyến nghị)
 ```bash
-python -m venv venv
-# Windows
-venv\\Scripts\\activate
-# Linux/Mac
-source venv/bin/activate
+# Tạo virtual environment
+python -m venv .venv
+
+# Kích hoạt environment
+# Windows PowerShell:
+.venv\Scripts\Activate.ps1
+# Windows CMD:
+.venv\Scripts\activate.bat
+# Linux/Mac:
+source .venv/bin/activate
 ```
 
-### 3. Cài đặt thư viện
+### 3. Cài đặt các package cần thiết
+
+#### Phương pháp 1: Cài đặt từ requirements.txt (Khuyến nghị)
 ```bash
 pip install -r requirements.txt
+```
+
+#### Phương pháp 2: Cài đặt từng package (Chi tiết)
+```bash
+# Core packages cho data processing
+pip install pandas>=1.5.0
+pip install numpy>=1.24.0
+
+# Machine Learning và NLP
+pip install torch>=2.0.0
+pip install transformers>=4.30.0
+
+# Visualization
+pip install matplotlib>=3.7.0
+pip install seaborn>=0.12.0
+pip install plotly>=5.15.0
+
+# API và networking
+pip install requests>=2.31.0
+
+# Environment management
+pip install python-dotenv>=1.0.0
+
+# Natural Language Processing utilities
+pip install nltk>=3.8.0
+
+# Optional: Jupyter for notebooks
+pip install jupyter>=1.0.0
+pip install ipykernel>=6.25.0
+```
+
+#### Phương pháp 3: Cài đặt với upgrade (Nếu gặp conflict)
+```bash
+pip install --upgrade pip
+pip install --upgrade pandas numpy torch transformers matplotlib seaborn plotly requests python-dotenv nltk
 ```
 
 ### 4. Cấu hình API Key
 ```bash
 # Sao chép template
-copy .env.example .env
+copy .env.template .env
 
-# Chỉnh sửa file .env và thêm Twitter API key
+# Chỉnh sửa file .env và thêm Twitter API key từ twitterapi.io
 TWITTER_API_KEY=your_api_key_here
+TWITTER_BEARER_TOKEN=your_bearer_token_here
+```
+
+### 5. Kiểm tra cài đặt
+```bash
+# Kiểm tra Python environment
+python --version  # Đảm bảo >= 3.8
+
+# Test import các package chính
+python -c "import torch; print('PyTorch:', torch.__version__)"
+python -c "import transformers; print('Transformers:', transformers.__version__)"
+python -c "import pandas; print('Pandas:', pandas.__version__)"
+
+# Chạy quick test
+python quick_start.py
+```
+
+### 6. Download NLTK data (Tự động khi chạy lần đầu)
+```python
+# Sẽ tự động download khi chạy, hoặc chạy manual:
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
 ```
 
 ## Sử dụng
 
-### Chạy pipeline hoàn chỉnh
+### Cách nhanh nhất: Chạy demo
 ```bash
-cd src
-python main.py --mode full --keywords GPT ChatGPT Copilot --max-tweets 500
+# Chạy demo với sample data
+python quick_start.py
 ```
 
-### Phân tích dữ liệu có sẵn
+### Chạy pipeline hoàn chỉnh
 ```bash
-python main.py --mode analyze --data-file ../data/tweets_processed_20240101_120000.csv
+# Chạy phân tích hoàn chỉnh
+python src/main.py
+
+# Hoặc chạy với custom settings
+cd src
+python main.py --keywords "GPT,ChatGPT,Copilot" --max-tweets 100
+```
+
+### Sử dụng Jupyter Notebook (Tương tác)
+```bash
+# Khởi động Jupyter
+jupyter notebook
+
+# Mở file: notebooks/twitter_sentiment_analysis_demo.ipynb
+# Chạy từng cell để xem demo step-by-step
 ```
 
 ### Sử dụng từng module riêng lẻ
@@ -180,25 +283,50 @@ Dựa trên đồ án gốc, chúng ta dự kiến:
 
 ### Lỗi thường gặp
 
-1. **ImportError: transformers**
+1. **ImportError: No module named 'transformers'**
    ```bash
+   # Đảm bảo đang trong virtual environment
+   .venv\Scripts\Activate.ps1
    pip install transformers torch
    ```
 
-2. **API Key không hợp lệ**
-   - Kiểm tra file `.env`
-   - Đảm bảo API key từ twitterapi.io đúng format
-
-3. **CUDA out of memory**
-   ```python
-   # Trong config.py, giảm BATCH_SIZE
-   BATCH_SIZE = 16  # từ 32 xuống 16
+2. **ModuleNotFoundError: No module named 'torch'**
+   ```bash
+   # Cài đặt PyTorch
+   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+   # Hoặc với GPU support:
+   # pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
    ```
 
-4. **Rate limit exceeded**
+3. **API Key không hợp lệ**
+   - Kiểm tra file `.env` có tồn tại
+   - Đảm bảo API key từ twitterapi.io đúng format
+   - Kiểm tra quyền của API key
+
+4. **CUDA out of memory (nếu dùng GPU)**
+   ```python
+   # Trong config.py, giảm BATCH_SIZE
+   BATCH_SIZE = 8  # từ 32 xuống 8
+   ```
+
+5. **Rate limit exceeded**
    ```python
    # Tăng RATE_LIMIT_DELAY trong config.py
    RATE_LIMIT_DELAY = 5  # từ 2s lên 5s
+   ```
+
+6. **SSL Certificate errors**
+   ```bash
+   # Nếu gặp lỗi SSL khi download model
+   pip install --upgrade certifi
+   # Hoặc set environment variable
+   set CURL_CA_BUNDLE=""
+   ```
+
+7. **Permission denied khi tạo virtual environment**
+   ```bash
+   # Chạy PowerShell as Administrator
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
 ## Development
@@ -241,8 +369,26 @@ MIT License - xem file LICENSE để biết chi tiết
 
 ## Tác giả
 
-- **Tên của bạn** - *Initial work* - [GitHub](https://github.com/yourusername)
+- **ThanhCongNguyen-2310373** - *Main Developer* - [GitHub](https://github.com/ThanhCongNguyen-2310373)
 - **Tham khảo**: Đồ án của Thịnh Lâm Tấn - Twitter Sentiment Analysis using Big Data
+
+## Demo và Kết quả
+
+### 📊 Sample Results (Demo Data)
+- **Tổng tweets phân tích**: 75
+- **Sentiment Distribution**:
+  - 🟢 Positive: 80% (60 tweets)
+  - 🔴 Negative: 13.33% (10 tweets)
+  - ⚪ Neutral: 6.67% (5 tweets)
+- **Average Sentiment Score**: 0.818/1.0
+- **Processing Time**: ~22 seconds
+- **Model Used**: cardiffnlp/twitter-roberta-base-sentiment-latest
+
+### 📈 Generated Outputs
+- **Visualization Charts**: PNG format (overall, by-keyword, timeline)
+- **Interactive Dashboard**: HTML với Plotly
+- **Processed Data**: CSV với sentiment scores
+- **Statistics**: JSON summary report
 
 ## Acknowledgments
 
