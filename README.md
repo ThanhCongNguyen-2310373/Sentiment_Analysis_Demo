@@ -2,7 +2,7 @@
 
 ## Tổng quan
 
-Dự án này tái hiện và mở rộng nghiên cứu về phân tích cảm xúc Twitter sử dụng mô hình RoBERTa-Twitter, dựa trên đồ án gốc của anh Thịnh Lâm Tấn. Thay vì xây dựng lại toàn bộ hệ thống Big Data phức tạp (Apache Kafka, Spark, MongoDB), chúng tôi tập trung vào việc tái hiện mô hình AI và kết quả phân tích với dữ liệu mới.
+Dự án này tái hiện và mở rộng nghiên cứu về phân tích cảm xúc Twitter sử dụng mô hình RoBERTa-Twitter, dựa trên đồ án gốc của anh Lâm Tấn Thịnh. Thay vì xây dựng lại toàn bộ hệ thống Big Data phức tạp (Apache Kafka, Spark, MongoDB), chúng tôi tập trung vào việc tái hiện mô hình AI và kết quả phân tích với dữ liệu mới.
 
 ## Kiến trúc Đơn giản hóa
 
@@ -75,7 +75,7 @@ git clone https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo.git
 cd Sentiment_Analysis_Demo
 ```
 
-### 2. Tạo môi trường ảo (khuyến nghị)
+### 2. Tạo môi trường ảo
 ```bash
 # Tạo virtual environment
 python -m venv .venv
@@ -123,12 +123,6 @@ pip install nltk>=3.8.0
 # Optional: Jupyter for notebooks
 pip install jupyter>=1.0.0
 pip install ipykernel>=6.25.0
-```
-
-#### Phương pháp 3: Cài đặt với upgrade (Nếu gặp conflict)
-```bash
-pip install --upgrade pip
-pip install --upgrade pandas numpy torch transformers matplotlib seaborn plotly requests python-dotenv nltk
 ```
 
 ### 4. Cấu hình API Key
@@ -252,90 +246,14 @@ KEYWORDS = [
 
 ## Kết quả và Biểu đồ
 
-Hệ thống tự động tạo các biểu đồ sau (tương tự đồ án gốc):
+Hệ thống tự động tạo các biểu đồ sau:
 
 1. **Sentiment Distribution by Keyword**: Biểu đồ cột chồng thể hiện tỷ lệ cảm xúc theo từ khóa
 2. **Overall Sentiment Distribution**: Biểu đồ tổng quan phân bố cảm xúc
 3. **Timeline Analysis**: Xu hướng cảm xúc theo thời gian
 4. **Interactive Dashboard**: Dashboard tương tác bằng Plotly
 
-## So sánh với Đồ án Gốc
-
-| Aspect | Đồ án Gốc | Dự án Hiện tại |
-|--------|-----------|----------------|
-| **Kiến trúc** | Big Data (Kafka + Spark + MongoDB) | Simple Python Pipeline |
-| **Mô hình** | RoBERTa-Twitter + Logistic Regression | RoBERTa-Twitter |
-| **Thu thập dữ liệu** | Real-time streaming | Batch collection |
-| **Xử lý** | Spark Streaming + MLlib | Pandas + Transformers |
-| **Lưu trữ** | MongoDB | CSV Files |
-| **Triển khai** | Distributed cluster | Single machine |
-| **Phức tạp** | High | Low |
-| **Khả năng mở rộng** | High | Medium |
-
-## Kết quả Dự kiến
-
-Dựa trên đồ án gốc, chúng ta dự kiến:
-- **Accuracy**: ~82% (tương đương kết quả gốc)
-- **Processing time**: Nhanh hơn do không có overhead của distributed system
-- **Resource usage**: Thấp hơn đáng kể
-
-## Troubleshooting
-
-### Lỗi thường gặp
-
-1. **ImportError: No module named 'transformers'**
-   ```bash
-   # Đảm bảo đang trong virtual environment
-   .venv\Scripts\Activate.ps1
-   pip install transformers torch
-   ```
-
-2. **ModuleNotFoundError: No module named 'torch'**
-   ```bash
-   # Cài đặt PyTorch
-   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-   # Hoặc với GPU support:
-   # pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-   ```
-
-3. **API Key không hợp lệ**
-   - Kiểm tra file `.env` có tồn tại
-   - Đảm bảo API key từ twitterapi.io đúng format
-   - Kiểm tra quyền của API key
-
-4. **CUDA out of memory (nếu dùng GPU)**
-   ```python
-   # Trong config.py, giảm BATCH_SIZE
-   BATCH_SIZE = 8  # từ 32 xuống 8
-   ```
-
-5. **Rate limit exceeded**
-   ```python
-   # Tăng RATE_LIMIT_DELAY trong config.py
-   RATE_LIMIT_DELAY = 5  # từ 2s lên 5s
-   ```
-
-6. **SSL Certificate errors**
-   ```bash
-   # Nếu gặp lỗi SSL khi download model
-   pip install --upgrade certifi
-   # Hoặc set environment variable
-   set CURL_CA_BUNDLE=""
-   ```
-
-7. **Permission denied khi tạo virtual environment**
-   ```bash
-   # Chạy PowerShell as Administrator
-   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ```
-
 ## Development
-
-### Chạy tests
-```bash
-cd src
-python -m pytest tests/  # (nếu có)
-```
 
 ### Test từng module
 ```bash
@@ -363,15 +281,6 @@ python visualization.py      # Test charts
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Tạo Pull Request
 
-## License
-
-MIT License - xem file LICENSE để biết chi tiết
-
-## Tác giả
-
-- **ThanhCongNguyen-2310373** - *Main Developer* - [GitHub](https://github.com/ThanhCongNguyen-2310373)
-- **Tham khảo**: Đồ án của Thịnh Lâm Tấn - Twitter Sentiment Analysis using Big Data
-
 ## Demo và Kết quả
 
 ### 📊 Sample Results (Demo Data)
@@ -392,11 +301,7 @@ MIT License - xem file LICENSE để biết chi tiết
 
 ## Acknowledgments
 
-- Cảm ơn anh Thịnh Lâm Tấn vì đồ án tham khảo xuất sắc
+- Cảm ơn anh Lâm Tấn Thịnh vì đồ án tham khảo xuất sắc
 - Hugging Face team vì mô hình RoBERTa-Twitter
 - Cardiff NLP team vì pre-trained model
 - twitterapi.io vì API service
-
----
-
-*Dự án này được thực hiện như một phần của khóa học NLP, tái hiện và mở rộng nghiên cứu về sentiment analysis với approach đơn giản hóa nhưng vẫn đảm bảo chất lượng kết quả.*
