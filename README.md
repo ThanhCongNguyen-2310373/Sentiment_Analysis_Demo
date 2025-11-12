@@ -1,402 +1,228 @@
-# Twitter Sentiment Analysis Project
+# 🎮 Gaming Sentiment Analysis Project
 
-## Tổng quan
+## 📋 Tổng quan
 
-Dự án này tái hiện và mở rộng nghiên cứu về phân tích cảm xúc Twitter sử dụng mô hình RoBERTa-Twitter, dựa trên đồ án gốc của anh Thịnh Lâm Tấn. Thay vì xây dựng lại toàn bộ hệ thống Big Data phức tạp (Apache Kafka, Spark, MongoDB), chúng tôi tập trung vào việc tái hiện mô hình AI và kết quả phân tích với dữ liệu mới.
+Dự án nghiên cứu và so sánh các phương pháp **Sentiment Analysis** cho Gaming Domain, bao gồm **Weak Supervision** và **Supervised Learning** với các kỹ thuật xử lý class imbalance. Dự án được thực hiện qua **4 stages** để so sánh hiệu quả của các phương pháp khác nhau.
 
-## Kiến trúc Đơn giản hóa
+### 🎯 Mục tiêu
+- So sánh **Weak Supervision** (Reddit Gaming) vs **Supervised Learning** (Kaggle Dataset)
+- Nghiên cứu hiệu quả của **Focal Loss** trong xử lý class imbalance
+- Áp dụng **Gaming-specific features** và **Community signals** vào sentiment analysis
+- Đánh giá trade-off giữa **manual labeling cost** vs **model accuracy**
+
+## 🏗️ Kiến trúc 4-Stage Pipeline
 
 ```
-Raw Data Collection → Text Preprocessing → Sentiment Analysis → Visualization
-     (Twitter API)      (Text Cleaning)      (RoBERTa Model)     (Charts & Reports)
+Stage 1: Weak Supervision          Stage 2: Supervised (Balanced)
+  (Reddit Gaming)         →          (Kaggle Dataset + DistilBERT)
+        ↓                                      ↓
+Stage 3: Focal Loss                Stage 4: Final Comparison
+  (Imbalanced Kaggle)      →         (All Methods Analysis)
 ```
 
-**So sánh với đồ án gốc:**
-- **Gốc**: Producer → Kafka → Spark Streaming → MongoDB → Visualization
-- **Hiện tại**: Python Script → CSV Files → RoBERTa → Charts & Reports
+### **4 Giai Đoạn Thực Hiện:**
 
-## Tính năng chính
+1. **Stage 1**: Weak Supervision với Reddit Gaming signals (6-8 signals)
+2. **Stage 2**: Supervised Learning với balanced Kaggle dataset
+3. **Stage 3**: Supervised Learning + Focal Loss (class imbalance)
+4. **Stage 4**: So sánh và đánh giá tất cả các phương pháp
 
-- 🔍 **Thu thập dữ liệu**: Tự động crawl tweets với từ khóa AI (GPT, ChatGPT, Copilot, etc.)
-- 🧹 **Tiền xử lý**: Làm sạch văn bản (loại bỏ URL, mentions, hashtags, ký tự đặc biệt)
-- 🤖 **Phân tích cảm xúc**: Sử dụng mô hình RoBERTa-Twitter từ Hugging Face
-- 📊 **Trực quan hóa**: Tạo biểu đồ tương tự đồ án gốc (Figures 6.4, 6.5)
-- 📈 **Báo cáo**: Thống kê chi tiết và so sánh kết quả
+## ✨ Tính năng chính
 
-## Cấu trúc thư mục
+### 🎮 Stage 1: Weak Supervision (Reddit Gaming)
+- **6-8 Signals Approach**: Awards, Comments, Upvote Ratio, Score, Text Features, Sarcasm, Flair, Top Comments
+- **No Manual Labeling**: Tự động tạo labels từ Reddit community signals
+- **Gaming-Specific**: Vocabulary và patterns cho gaming domain
+- **Fast Training**: 8 phút training time
+- **Results**: 68.88% accuracy với 3,847 gaming posts
+
+### 📚 Stage 3: Supervised Learning (Focal Loss)
+- **Focal Loss**: Xử lý class imbalance (alpha=0.25, gamma=2.0)
+- **Large Dataset**: 23,189 pre-labeled Kaggle game reviews
+- **High Accuracy**: 86.75% accuracy, 86.84% F1-score
+- **Class Balance**: Handle 2.46:1 imbalance ratio
+- **Longer Training**: 109 phút với larger dataset
+
+### 📊 Phân tích & So sánh
+- **Comprehensive Metrics**: Accuracy, F1-Score, Training Time, Dataset Size
+- **Trade-off Analysis**: Manual labeling cost vs model performance
+- **Hybrid Approach**: Kết hợp weak supervision + supervised learning
+- **Detailed Reports**: JSON results + markdown analysis
+
+## 📁 Cấu trúc thư mục
 
 ```
 sentiment-analysis-project/
-├── src/                      # Source code
-│   ├── config.py            # Cấu hình chung
-│   ├── crawler.py           # Module thu thập dữ liệu
-│   ├── data_preprocessing.py # Module tiền xử lý
-│   ├── sentiment_analysis.py # Module phân tích cảm xúc
-│   ├── visualization.py     # Module trực quan hóa
-│   ├── main.py             # Script chính
-│   └── __init__.py         # Package initialization
-├── data/                    # Dữ liệu thô và đã xử lý
-├── results/                 # Kết quả phân tích và biểu đồ
-├── notebooks/              # Jupyter notebooks demo
-├── requirements.txt        # Danh sách thư viện
-├── .env.example           # Template cho biến môi trường
-└── README.md              # Tài liệu này
+├── Notebook/                       # 🎯 Jupyter notebooks cho 4 stages
+│   ├── stage1_weak_supervision.ipynb       # Stage 1: Reddit Gaming Weak Supervision
+│   ├── stage2.ipynb                        # Stage 2: Balanced Supervised Learning
+│   ├── stage3_supervised_focal_loss.ipynb  # Stage 3a: Focal Loss (Imbalanced)
+│   ├── stage3_supervised_class_weighting.ipynb  # Stage 3b: Class Weighting (Imbalanced)
+│   └── stage4_final_comparison.ipynb       # Stage 4: Compare all methods
+│
+├── data/                           # 📊 Datasets
+│   └── 23k_r_gaming_comments_sentiments.csv   # Kaggle Game Reviews (23K)
+│
+├── results/                        # 📈 Training results
+│   ├── stage1_results.json        # Stage 1 metrics (Weak Supervision)
+│   ├── stage2_results.json        # Stage 2 metrics (Balanced Supervised) - TODO
+│   ├── stage3_focal_results.json  # Stage 3a metrics (Focal Loss)
+│   ├── stage3_weighted_results.json # Stage 3b metrics (Class Weighting) - TODO
+│   └── [model_checkpoints]/       # Saved models
+│
+├── RESULTS_ANALYSIS.md            # 📊 Comprehensive results analysis
+├── README.md                      # 📖 This file
+├── requirements.txt               # 📦 Python dependencies
+└── .gitignore                     # Git ignore patterns
 ```
 
-## Yêu cầu hệ thống
-
-### System Requirements
-- **Python**: 3.8+ (Đã test trên Python 3.13.7)
-- **RAM**: Tối thiểu 4GB, khuyến nghị 8GB+
-- **Disk**: 2GB free space (cho models và data)
-- **OS**: Windows 10/11, macOS, Linux
-- **Internet**: Cần để download models và API calls
-
-### Package Dependencies
+### 📦 Core Dependencies
 ```
-pandas>=1.5.0          # Data manipulation
-numpy>=1.24.0           # Numerical computing  
-torch>=2.0.0            # Deep learning framework
-transformers>=4.30.0    # Hugging Face models
-matplotlib>=3.7.0       # Basic plotting
-seaborn>=0.12.0         # Statistical visualization
-plotly>=5.15.0          # Interactive charts
-requests>=2.31.0        # HTTP requests
-python-dotenv>=1.0.0    # Environment variables
-nltk>=3.8.0             # Natural language toolkit
-jupyter>=1.0.0          # Notebook interface (optional)
+# Deep Learning & NLP
+torch>=2.0.0              # PyTorch framework
+transformers>=4.30.0      # Hugging Face models (RoBERTa, DistilBERT)
+
+# Data Processing
+pandas>=1.5.0             # DataFrame manipulation
+numpy>=1.24.0             # Numerical operations
+scikit-learn>=1.3.0       # ML utilities, metrics
+
+# Reddit API
+praw>=7.7.0               # Reddit API wrapper
+python-dotenv>=1.0.0      # Environment variables
+
+# Visualization
+matplotlib>=3.7.0         # Basic plotting
+seaborn>=0.12.0          # Statistical visualization
+plotly>=5.15.0           # Interactive dashboards
+
+# Jupyter Notebooks
+jupyter>=1.0.0           # Notebook interface
+ipykernel>=6.25.0        # Jupyter kernel
+tqdm>=4.65.0             # Progress bars
 ```
 
-## Cài đặt
+## 🚀 Quick Start
 
-### 1. Clone repository
+### Option 1: Google Colab (Khuyến nghị - Có GPU miễn phí)
+
+```python
+# Upload notebooks lên Google Drive
+# Mở notebook trong Colab và chạy:
+
+!pip install transformers torch praw scikit-learn
+
+# Chạy từng stage theo thứ tự:
+# Stage 1 → Stage 2 → Stage 3 → Stage 4
+```
+
+### Option 2: Local Setup
+
+#### 1. Clone repository
 ```bash
 git clone https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo.git
 cd Sentiment_Analysis_Demo
 ```
 
-### 2. Tạo môi trường ảo (khuyến nghị)
+#### 2. Tạo môi trường ảo
 ```bash
-# Tạo virtual environment
+# Windows PowerShell
 python -m venv .venv
-
-# Kích hoạt environment
-# Windows PowerShell:
 .venv\Scripts\Activate.ps1
-# Windows CMD:
-.venv\Scripts\activate.bat
-# Linux/Mac:
+
+# Linux/Mac
+python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### 3. Cài đặt các package cần thiết
-
-#### Phương pháp 1: Cài đặt từ requirements.txt (Khuyến nghị)
+#### 3. Cài đặt dependencies
 ```bash
+# One-command install
 pip install -r requirements.txt
+
+# Hoặc cài đặt từng group
+pip install torch transformers scikit-learn
+pip install pandas numpy matplotlib seaborn plotly
+pip install praw python-dotenv jupyter tqdm
 ```
 
-#### Phương pháp 2: Cài đặt từng package (Chi tiết)
+#### 4. Cấu hình Reddit API (Chỉ cho Stage 1)
 ```bash
-# Core packages cho data processing
-pip install pandas>=1.5.0
-pip install numpy>=1.24.0
+# Copy template
+cp .env.template .env
 
-# Machine Learning và NLP
-pip install torch>=2.0.0
-pip install transformers>=4.30.0
-
-# Visualization
-pip install matplotlib>=3.7.0
-pip install seaborn>=0.12.0
-pip install plotly>=5.15.0
-
-# API và networking
-pip install requests>=2.31.0
-
-# Environment management
-pip install python-dotenv>=1.0.0
-
-# Natural Language Processing utilities
-pip install nltk>=3.8.0
-
-# Optional: Jupyter for notebooks
-pip install jupyter>=1.0.0
-pip install ipykernel>=6.25.0
+# Edit .env và thêm Reddit credentials
+# Get from: https://www.reddit.com/prefs/apps
+REDDIT_CLIENT_ID=your_client_id
+REDDIT_CLIENT_SECRET=your_client_secret
+REDDIT_USER_AGENT=your_user_agent
 ```
 
-#### Phương pháp 3: Cài đặt với upgrade (Nếu gặp conflict)
+#### 5. Khởi động Jupyter
 ```bash
-pip install --upgrade pip
-pip install --upgrade pandas numpy torch transformers matplotlib seaborn plotly requests python-dotenv nltk
-```
-
-### 4. Cấu hình API Key
-```bash
-# Sao chép template
-copy .env.template .env
-
-# Chỉnh sửa file .env và thêm Twitter API key từ twitterapi.io
-TWITTER_API_KEY=your_api_key_here
-TWITTER_BEARER_TOKEN=your_bearer_token_here
-```
-
-### 5. Kiểm tra cài đặt
-```bash
-# Kiểm tra Python environment
-python --version  # Đảm bảo >= 3.8
-
-# Test import các package chính
-python -c "import torch; print('PyTorch:', torch.__version__)"
-python -c "import transformers; print('Transformers:', transformers.__version__)"
-python -c "import pandas; print('Pandas:', pandas.__version__)"
-
-# Chạy quick test
-python quick_start.py
-```
-
-### 6. Download NLTK data (Tự động khi chạy lần đầu)
-```python
-# Sẽ tự động download khi chạy, hoặc chạy manual:
-import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-```
-
-## Sử dụng
-
-### Cách nhanh nhất: Chạy demo
-```bash
-# Chạy demo với sample data
-python quick_start.py
-```
-
-### Chạy pipeline hoàn chỉnh
-```bash
-# Chạy phân tích hoàn chỉnh
-python src/main.py
-
-# Hoặc chạy với custom settings
-cd src
-python main.py --keywords "GPT,ChatGPT,Copilot" --max-tweets 100
-```
-
-### Sử dụng Jupyter Notebook (Tương tác)
-```bash
-# Khởi động Jupyter
 jupyter notebook
 
-# Mở file: notebooks/twitter_sentiment_analysis_demo.ipynb
-# Chạy từng cell để xem demo step-by-step
+# Mở notebooks/ và chạy theo thứ tự:
+# stage1_weak_supervision.ipynb → stage2 → stage3 → stage4
 ```
 
-### Sử dụng từng module riêng lẻ
+## 🔄 Future Improvements
 
-#### 1. Thu thập dữ liệu
-```python
-from src.crawler import TwitterCrawler
+### 🎯 For Stage 1 (Weak Supervision)
+- [ ] Implement 8-signal approach (currently 6 signals)
+- [ ] Add flair analysis và top comments signals
+- [ ] Increase dataset to 500 posts/subreddit
+- [ ] Enhanced gaming vocabulary với N-grams
+- [ ] Dynamic weighting system
+- [ ] Better class balancing
 
-crawler = TwitterCrawler()
-df = crawler.crawl_multiple_keywords(['GPT', 'ChatGPT'], max_tweets_per_keyword=100)
-crawler.save_raw_data(df, 'my_tweets.csv')
-```
+### 🎯 For Stage 2 (Balanced Supervised)
+- [ ] Implement và train DistilBERT model
+- [ ] Compare với RoBERTa performance
+- [ ] Test different balancing techniques
+- [ ] Hyperparameter tuning
 
-#### 2. Tiền xử lý
-```python
-from src.data_preprocessing import TextPreprocessor
+### 🎯 For Stage 3 (Focal Loss)
+- [ ] Tune Focal Loss parameters (alpha, gamma)
+- [ ] Try different loss functions (Label Smoothing, etc.)
+- [ ] Address class imbalance further
+- [ ] Combine với gaming-specific features from Stage 1
 
-preprocessor = TextPreprocessor()
-processed_df = preprocessor.preprocess_dataframe(df)
-```
-
-#### 3. Phân tích cảm xúc
-```python
-from src.sentiment_analysis import SentimentAnalyzer
-
-analyzer = SentimentAnalyzer()
-result_df = analyzer.analyze_dataframe(processed_df)
-```
-
-#### 4. Trực quan hóa
-```python
-from src.visualization import SentimentVisualizer
-
-visualizer = SentimentVisualizer()
-visualizer.create_all_visualizations(result_df)
-```
-
-## Mô hình và Phương pháp
-
-### Mô hình RoBERTa-Twitter
-- **Model**: `cardiffnlp/twitter-roberta-base-sentiment-latest`
-- **Nguồn**: Hugging Face Transformers
-- **Đặc điểm**: Được tinh chỉnh chuyên biệt cho dữ liệu Twitter
-- **Output**: 3 lớp (Positive, Negative, Neutral) với confidence scores
-
-### Pipeline Tiền xử lý (theo đồ án gốc)
-1. **Chuyển chữ thường**: Chuẩn hóa text
-2. **Loại bỏ URL**: Xóa các liên kết web
-3. **Loại bỏ mentions**: Xóa @username
-4. **Loại bỏ hashtags**: Xóa #hashtag
-5. **Loại bỏ ký tự đặc biệt**: Chỉ giữ chữ cái và số
-6. **Loại bỏ khoảng trắng thừa**: Chuẩn hóa spaces
-
-### Từ khóa thu thập
-```python
-KEYWORDS = [
-    "GPT", "Copilot", "Gemini",     # Từ đồ án gốc
-    "GPT-4o", "Sora", "Llama 3",    # Từ khóa mới
-    "Claude", "ChatGPT"             # Bổ sung thêm
-]
-```
-
-## Kết quả và Biểu đồ
-
-Hệ thống tự động tạo các biểu đồ sau (tương tự đồ án gốc):
-
-1. **Sentiment Distribution by Keyword**: Biểu đồ cột chồng thể hiện tỷ lệ cảm xúc theo từ khóa
-2. **Overall Sentiment Distribution**: Biểu đồ tổng quan phân bố cảm xúc
-3. **Timeline Analysis**: Xu hướng cảm xúc theo thời gian
-4. **Interactive Dashboard**: Dashboard tương tác bằng Plotly
-
-## So sánh với Đồ án Gốc
-
-| Aspect | Đồ án Gốc | Dự án Hiện tại |
-|--------|-----------|----------------|
-| **Kiến trúc** | Big Data (Kafka + Spark + MongoDB) | Simple Python Pipeline |
-| **Mô hình** | RoBERTa-Twitter + Logistic Regression | RoBERTa-Twitter |
-| **Thu thập dữ liệu** | Real-time streaming | Batch collection |
-| **Xử lý** | Spark Streaming + MLlib | Pandas + Transformers |
-| **Lưu trữ** | MongoDB | CSV Files |
-| **Triển khai** | Distributed cluster | Single machine |
-| **Phức tạp** | High | Low |
-| **Khả năng mở rộng** | High | Medium |
-
-## Kết quả Dự kiến
-
-Dựa trên đồ án gốc, chúng ta dự kiến:
-- **Accuracy**: ~82% (tương đương kết quả gốc)
-- **Processing time**: Nhanh hơn do không có overhead của distributed system
-- **Resource usage**: Thấp hơn đáng kể
-
-## Troubleshooting
-
-### Lỗi thường gặp
-
-1. **ImportError: No module named 'transformers'**
-   ```bash
-   # Đảm bảo đang trong virtual environment
-   .venv\Scripts\Activate.ps1
-   pip install transformers torch
-   ```
-
-2. **ModuleNotFoundError: No module named 'torch'**
-   ```bash
-   # Cài đặt PyTorch
-   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-   # Hoặc với GPU support:
-   # pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-   ```
-
-3. **API Key không hợp lệ**
-   - Kiểm tra file `.env` có tồn tại
-   - Đảm bảo API key từ twitterapi.io đúng format
-   - Kiểm tra quyền của API key
-
-4. **CUDA out of memory (nếu dùng GPU)**
-   ```python
-   # Trong config.py, giảm BATCH_SIZE
-   BATCH_SIZE = 8  # từ 32 xuống 8
-   ```
-
-5. **Rate limit exceeded**
-   ```python
-   # Tăng RATE_LIMIT_DELAY trong config.py
-   RATE_LIMIT_DELAY = 5  # từ 2s lên 5s
-   ```
-
-6. **SSL Certificate errors**
-   ```bash
-   # Nếu gặp lỗi SSL khi download model
-   pip install --upgrade certifi
-   # Hoặc set environment variable
-   set CURL_CA_BUNDLE=""
-   ```
-
-7. **Permission denied khi tạo virtual environment**
-   ```bash
-   # Chạy PowerShell as Administrator
-   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ```
-
-## Development
-
-### Chạy tests
-```bash
-cd src
-python -m pytest tests/  # (nếu có)
-```
-
-### Test từng module
-```bash
-python config.py      # Test configuration
-python crawler.py     # Test data collection
-python data_preprocessing.py  # Test preprocessing
-python sentiment_analysis.py  # Test sentiment model
-python visualization.py      # Test charts
-```
-
-## Kế hoạch tương lai
-
-- [ ] Thêm mô hình Logistic Regression để so sánh
-- [ ] Hỗ trợ nhiều ngôn ngữ
-- [ ] Real-time dashboard với Streamlit
+### 🚀 Advanced Features
+- [ ] Hybrid approach: Stage 1 → Human verify → Stage 3
+- [ ] Active learning for sample selection
+- [ ] Ensemble methods (combine all stages)
+- [ ] Real-time sentiment dashboard
+- [ ] API deployment (FastAPI)
 - [ ] Docker containerization
-- [ ] Cloud deployment (AWS/Azure)
+- [ ] Multi-language support
 - [ ] A/B testing framework
 
-## Đóng góp
 
-1. Fork repository
-2. Tạo feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Tạo Pull Request
+## 🤝 Contributing
 
-## License
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-MIT License - xem file LICENSE để biết chi tiết
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Tác giả
+## � Contact
 
-- **ThanhCongNguyen-2310373** - *Main Developer* - [GitHub](https://github.com/ThanhCongNguyen-2310373)
-- **Tham khảo**: Đồ án của Thịnh Lâm Tấn - Twitter Sentiment Analysis using Big Data
+- GitHub: [@ThanhCongNguyen-2310373](https://github.com/ThanhCongNguyen-2310373)
+- Project Link: [https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo](https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo)
 
-## Demo và Kết quả
+## ⭐ Star History
 
-### 📊 Sample Results (Demo Data)
-- **Tổng tweets phân tích**: 75
-- **Sentiment Distribution**:
-  - 🟢 Positive: 80% (60 tweets)
-  - 🔴 Negative: 13.33% (10 tweets)
-  - ⚪ Neutral: 6.67% (5 tweets)
-- **Average Sentiment Score**: 0.818/1.0
-- **Processing Time**: ~22 seconds
-- **Model Used**: cardiffnlp/twitter-roberta-base-sentiment-latest
-
-### 📈 Generated Outputs
-- **Visualization Charts**: PNG format (overall, by-keyword, timeline)
-- **Interactive Dashboard**: HTML với Plotly
-- **Processed Data**: CSV với sentiment scores
-- **Statistics**: JSON summary report
-
-## Acknowledgments
-
-- Cảm ơn anh Thịnh Lâm Tấn vì đồ án tham khảo xuất sắc
-- Hugging Face team vì mô hình RoBERTa-Twitter
-- Cardiff NLP team vì pre-trained model
-- twitterapi.io vì API service
+If you find this project useful, please consider giving it a star ⭐
 
 ---
 
-*Dự án này được thực hiện như một phần của khóa học NLP, tái hiện và mở rộng nghiên cứu về sentiment analysis với approach đơn giản hóa nhưng vẫn đảm bảo chất lượng kết quả.*
+**📅 Last Updated**: November 12, 2025  
+**🔬 Research Focus**: Weak Supervision vs Supervised Learning for Gaming Sentiment Analysis  
+
+---
+
+*Built with ❤️ for the gaming community and NLP research*

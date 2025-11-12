@@ -1,0 +1,49 @@
+{
+  "stage": 1,
+  "method": "Weak Supervision (Reddit Gaming)",
+  "dataset": "Reddit Gaming Posts",
+  "dataset_size": 3847,
+  "train_size": 1542,
+  "val_size": 331,
+  "test_size": 331,
+  "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+  "epochs": 3,
+  "batch_size": 16,
+  "learning_rate": 2e-05,
+  "metrics": {
+    "accuracy": 0.6888217522658611,
+    "f1_weighted": 0.6870213930168777
+  },
+  "weak_labeling": {
+    "signals_used": [
+      "awards",
+      "comments",
+      "upvote_ratio",
+      "score",
+      "gaming_text_features",
+      "sarcasm"
+    ],
+    "avg_confidence": 0.7869552832821293,
+    "labeled_samples": 2204,
+    "min_confidence_threshold": 0.6
+  },
+  "gaming_focus": {
+    "subreddits": [
+      "gaming",
+      "Games",
+      "pcgaming",
+      "gamernews",
+      "gamedev",
+      "indiegaming"
+    ],
+    "keywords": [
+      "game",
+      "gaming",
+      "gameplay",
+      "review",
+      "experience"
+    ],
+    "subreddits_count": 6
+  },
+  "training_time_seconds": 477.0847
+}

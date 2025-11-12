@@ -1,0 +1,29 @@
+{
+  "stage": 3,
+  "method": "Supervised Learning (Focal Loss + Imbalanced)",
+  "dataset": "Kaggle Game Reviews",
+  "loss_function": "Focal Loss",
+  "focal_loss_params": {
+    "alpha": 0.25,
+    "gamma": 2.0
+  },
+  "dataset_size": 23189,
+  "train_size": 16232,
+  "val_size": 3478,
+  "test_size": 3479,
+  "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+  "epochs": 3,
+  "batch_size": 16,
+  "learning_rate": 2e-05,
+  "metrics": {
+    "accuracy": 0.8674906582351251,
+    "f1_weighted": 0.8684062911471342
+  },
+  "class_distribution": {
+    "positive": 10034,
+    "neutral": 9083,
+    "negative": 4072
+  },
+  "imbalance_ratio": 2.4641453831041256,
+  "training_time_seconds": 6515.6397
+}
