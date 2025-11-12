@@ -13,67 +13,77 @@ Dự án nghiên cứu và so sánh các phương pháp **Sentiment Analysis** c
 ## 🏗️ Kiến trúc 4-Stage Pipeline
 
 ```
-Stage 1: Weak Supervision          Stage 2: Supervised (Balanced)
-  (Reddit Gaming)         →          (Kaggle Dataset + DistilBERT)
-        ↓                                      ↓
-Stage 3: Focal Loss                Stage 4: Final Comparison
-  (Imbalanced Kaggle)      →         (All Methods Analysis)
+Stage 1: Weak Supervision (Reddit Gaming, no labels needed)
+        ↓
+Stage 2: Supervised Balanced (Kaggle Dataset + Undersampling)
+        ↓
+Stage 3a: Focal Loss (Imbalanced)  +  Stage 3b: Class Weighting (Imbalanced)
+        ↓
+Stage 4: Final Comparison (All Methods)
 ```
 
-### **4 Giai Đoạn Thực Hiện:**
+### **5 Giai Đoạn Thực Hiện:**
 
-1. **Stage 1**: Weak Supervision với Reddit Gaming signals (6-8 signals)
-2. **Stage 2**: Supervised Learning với balanced Kaggle dataset
-3. **Stage 3**: Supervised Learning + Focal Loss (class imbalance)
-4. **Stage 4**: So sánh và đánh giá tất cả các phương pháp
+1. **Stage 1**: Weak Supervision - Reddit Gaming signals (8 signals), no manual labels
+2. **Stage 2**: Supervised Balanced - Kaggle dataset + undersampling
+3. **Stage 3a**: Focal Loss - Handle imbalance with α=0.25, γ=2.0
+4. **Stage 3b**: Class Weighting - Alternative imbalance handling
+5. **Stage 4**: Final Comparison - Comprehensive analysis
 
 ## ✨ Tính năng chính
 
-### 🎮 Stage 1: Weak Supervision (Reddit Gaming)
-- **6-8 Signals Approach**: Awards, Comments, Upvote Ratio, Score, Text Features, Sarcasm, Flair, Top Comments
-- **No Manual Labeling**: Tự động tạo labels từ Reddit community signals
-- **Gaming-Specific**: Vocabulary và patterns cho gaming domain
-- **Fast Training**: 8 phút training time
-- **Results**: 68.88% accuracy với 3,847 gaming posts
+### 🎮 Stage 1: Weak Supervision
+- **8 Signals**: Awards, Comments, Upvote Ratio, Score, Text, Sarcasm, flair, top comments
+- **No Labels Needed**: Auto-generate from Reddit signals
+- **Fast**: 8 min training, 68.88% accuracy, 3,847 samples
 
-### 📚 Stage 3: Supervised Learning (Focal Loss)
-- **Focal Loss**: Xử lý class imbalance (alpha=0.25, gamma=2.0)
-- **Large Dataset**: 23,189 pre-labeled Kaggle game reviews
-- **High Accuracy**: 86.75% accuracy, 86.84% F1-score
-- **Class Balance**: Handle 2.46:1 imbalance ratio
-- **Longer Training**: 109 phút với larger dataset
+### 📚 Stage 2: Supervised Balanced
+- **Undersampling**: Balance classes (23K → 12K samples)
+- **Mid-Range**: 10 min training, 84.67% accuracy
+- **Trade-off**: Data loss for balanced performance
 
-### 📊 Phân tích & So sánh
-- **Comprehensive Metrics**: Accuracy, F1-Score, Training Time, Dataset Size
-- **Trade-off Analysis**: Manual labeling cost vs model performance
-- **Hybrid Approach**: Kết hợp weak supervision + supervised learning
-- **Detailed Reports**: JSON results + markdown analysis
+### 🔥 Stage 3a: Focal Loss
+- **Full Dataset**: 23,189 samples (no undersampling)
+- **Best Accuracy**: 86.75% accuracy, 86.84% F1-score
+- **Slow**: 109 min training, α=0.25, γ=2.0
+
+### ⚖️ Stage 3b: Class Weighting
+- **Alternative**: Weighted CrossEntropy (no Focal Loss)
+- **Full Dataset**: 23,189 samples
+- **Compare**: vs Focal Loss performance
+
+### 📊 Stage 4: Comparison
+- **Visualizations**: Bar charts, radar plots, scatter plots
+- **Trade-offs**: Speed vs Accuracy vs Data Efficiency
+- **Recommendations**: Best approach for each scenario
 
 ## 📁 Cấu trúc thư mục
 
 ```
 sentiment-analysis-project/
-├── Notebook/                       # 🎯 Jupyter notebooks cho 4 stages
-│   ├── stage1_weak_supervision.ipynb       # Stage 1: Reddit Gaming Weak Supervision
-│   ├── stage2.ipynb                        # Stage 2: Balanced Supervised Learning
-│   ├── stage3_supervised_focal_loss.ipynb  # Stage 3a: Focal Loss (Imbalanced)
-│   ├── stage3_supervised_class_weighting.ipynb  # Stage 3b: Class Weighting (Imbalanced)
-│   └── stage4_final_comparison.ipynb       # Stage 4: Compare all methods
+├── Notebook/                       # 🎯 5 Jupyter notebooks
+│   ├── stage1_weak_supervision.ipynb              # Weak Supervision
+│   ├── stage2.ipynb                               # Balanced Supervised
+│   ├── stage3_supervised_focal_loss.ipynb         # Focal Loss
+│   ├── stage3_supervised_class_weighting.ipynb    # Class Weighting
+│   └── stage4_final_comparison.ipynb              # Final Comparison
 │
-├── data/                           # 📊 Datasets
-│   └── 23k_r_gaming_comments_sentiments.csv   # Kaggle Game Reviews (23K)
+├── data/                           # 📊 Dataset
+│   └── 23k_r_gaming_comments_sentiments.csv
 │
-├── results/                        # 📈 Training results
-│   ├── stage1_results.json        # Stage 1 metrics (Weak Supervision)
-│   ├── stage2_results.json        # Stage 2 metrics (Balanced Supervised) - TODO
-│   ├── stage3_focal_results.json  # Stage 3a metrics (Focal Loss)
-│   ├── stage3_weighted_results.json # Stage 3b metrics (Class Weighting) - TODO
-│   └── [model_checkpoints]/       # Saved models
+├── results/                        # 📈 JSON results
+│   ├── stage1_results.json
+│   ├── stage2_results.json        # TODO: Upload from Colab
+│   ├── stage3_results.json        # Stage 3a: Focal Loss
+│   └── stage3_weighted_results.json # TODO: Stage 3b training
 │
-├── RESULTS_ANALYSIS.md            # 📊 Comprehensive results analysis
+├── documentation/                  # 📄 Analysis documents
+│   ├── RESULTS_ANALYSIS.md       # Stage 1 vs 3a comparison
+│   └── PROJECT_STATUS.md         # Project status tracker
+│
 ├── README.md                      # 📖 This file
-├── requirements.txt               # 📦 Python dependencies
-└── .gitignore                     # Git ignore patterns
+├── requirements.txt               # 📦 Dependencies
+└── .gitignore                     # Git ignore
 ```
 
 ### 📦 Core Dependencies
@@ -166,59 +176,12 @@ jupyter notebook
 # stage1_weak_supervision.ipynb → stage2 → stage3 → stage4
 ```
 
-## 🔄 Future Improvements
-
-### 🎯 For Stage 1 (Weak Supervision)
-- [ ] Implement 8-signal approach (currently 6 signals)
-- [ ] Add flair analysis và top comments signals
-- [ ] Increase dataset to 500 posts/subreddit
-- [ ] Enhanced gaming vocabulary với N-grams
-- [ ] Dynamic weighting system
-- [ ] Better class balancing
-
-### 🎯 For Stage 2 (Balanced Supervised)
-- [ ] Implement và train DistilBERT model
-- [ ] Compare với RoBERTa performance
-- [ ] Test different balancing techniques
-- [ ] Hyperparameter tuning
-
-### 🎯 For Stage 3 (Focal Loss)
-- [ ] Tune Focal Loss parameters (alpha, gamma)
-- [ ] Try different loss functions (Label Smoothing, etc.)
-- [ ] Address class imbalance further
-- [ ] Combine với gaming-specific features from Stage 1
-
-### 🚀 Advanced Features
-- [ ] Hybrid approach: Stage 1 → Human verify → Stage 3
-- [ ] Active learning for sample selection
-- [ ] Ensemble methods (combine all stages)
-- [ ] Real-time sentiment dashboard
-- [ ] API deployment (FastAPI)
-- [ ] Docker containerization
-- [ ] Multi-language support
-- [ ] A/B testing framework
-
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
+---
 ## � Contact
 
 - GitHub: [@ThanhCongNguyen-2310373](https://github.com/ThanhCongNguyen-2310373)
 - Project Link: [https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo](https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo)
 
-## ⭐ Star History
-
-If you find this project useful, please consider giving it a star ⭐
-
----
 
 **📅 Last Updated**: November 12, 2025  
 **🔬 Research Focus**: Weak Supervision vs Supervised Learning for Gaming Sentiment Analysis  
