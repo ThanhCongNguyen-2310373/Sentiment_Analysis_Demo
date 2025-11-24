@@ -1,0 +1,29 @@
+{
+  "stage": 3,
+  "method": "Class Weighting",
+  "dataset": "Kaggle Game Reviews",
+  "dataset_size": 21821,
+  "train_size": 15274,
+  "val_size": 3273,
+  "test_size": 3274,
+  "model": "cardiffnlp/twitter-roberta-base-sentiment-latest",
+  "epochs": 4,
+  "batch_size": 16,
+  "learning_rate": 1e-05,
+  "metrics": {
+    "accuracy": 0.8188759926695174,
+    "f1_weighted": 0.8183361721617242,
+    "f1_macro": 0.7955134756279896
+  },
+  "class_weights": [
+    0.3546011745929718,
+    0.3263760209083557,
+    0.3190228044986725
+  ],
+  "class_distribution": {
+    "positive": 9777,
+    "neutral": 8013,
+    "negative": 4031
+  },
+  "training_time_seconds": 6091.9903
+}
