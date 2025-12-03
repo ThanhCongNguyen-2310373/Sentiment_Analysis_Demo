@@ -6,80 +6,131 @@ Dự án nghiên cứu và so sánh các phương pháp **Sentiment Analysis** c
 
 ### 🎯 Mục tiêu
 - So sánh **Weak Supervision** (Reddit Gaming) vs **Supervised Learning** (Kaggle Dataset)
-- Nghiên cứu hiệu quả của **Focal Loss** trong xử lý class imbalance
+- Nghiên cứu hiệu quả của **Focal Loss** và **Class Weighting** trong xử lý class imbalance
 - Áp dụng **Gaming-specific features** và **Community signals** vào sentiment analysis
 - Đánh giá trade-off giữa **manual labeling cost** vs **model accuracy**
+
+## 📊 Kết quả Chính (All Stages Complete ✅)
+
+| Stage | Method | Dataset | Samples | Accuracy | F1-Score | Training Time |
+|-------|--------|---------|---------|----------|----------|---------------|
+| **1** | Weak Supervision (8-Signal) | Reddit | 2,204 | **86.70%** | 0.868 | 19 min |
+| **1-X** | Stage 1 Cross-Eval | Kaggle | 23,189 | **47.88%** | 0.459 | - |
+| **2** | Supervised (Balanced) | Kaggle | 12,216 | **79.44%** | 0.793 | 51 min |
+| **3a** | Supervised (Focal Loss) ⭐ | Kaggle | 23,189 | **82.35%** | 0.823 | 36 min |
+| **3b** | Supervised (Class Weight) | Kaggle | 23,189 | **81.89%** | 0.818 | 95 min |
+
+### 🔑 Key Findings
+
+✅ **Stage 3a (Focal Loss) is BEST for Kaggle Dataset**:
+- Highest accuracy: **82.35%** (+2.91% vs Stage 2 Balanced)
+- Best F1-Score: **0.823**
+- Uses **full dataset** (no data loss from undersampling)
+- **Fastest training** among supervised methods (36 min)
+- Optimal for production deployment
+
+⚠️ **Weak Supervision (Stage 1) Shows Severe Generalization Gap**:
+- Excellent on **Reddit domain**: 86.70% accuracy
+- **Fails on Kaggle domain**: Only 47.88% accuracy (38.82% drop!)
+- Conclusion: Domain-specific signals don't transfer well
+- Useful for **rapid prototyping** but needs domain-matched data
+
+📊 **Stage 3b (Class Weighting) vs Stage 3a (Focal Loss)**:
+- Class Weighting: 81.89% accuracy, **95 min** training
+- Focal Loss: 82.35% accuracy, **36 min** training (2.6× faster)
+- Focal Loss outperforms by +0.46% with significantly faster training
+- Recommendation: **Use Focal Loss** unless hardware constraints exist
+
+🎯 **Stage 2 (Balancing) Trade-offs**:
+- Loses **47% of data** (23,189 → 12,216 samples)
+- Result: 79.44% accuracy (2.91% below Focal Loss)
+- Conclusion: Data loss hurts performance; **avoid undersampling** when possible
 
 ## 🏗️ Kiến trúc 4-Stage Pipeline
 
 ```
-Stage 1: Weak Supervision (Reddit Gaming, no labels needed)
+Stage 1: Weak Supervision (Reddit Gaming, no labels)
+        ↓
+Stage 1-X: Cross-Evaluation (Stage 1 model → Kaggle test)
         ↓
 Stage 2: Supervised Balanced (Kaggle Dataset + Undersampling)
         ↓
-Stage 3a: Focal Loss (Imbalanced)  +  Stage 3b: Class Weighting (Imbalanced)
+Stage 3a: Focal Loss (Full Imbalanced)  +  Stage 3b: Class Weighting (Full Imbalanced)
         ↓
 Stage 4: Final Comparison (All Methods)
 ```
 
-### **5 Giai Đoạn Thực Hiện:**
+### **4 Giai Đoạn Thực Hiện:**
 
-1. **Stage 1**: Weak Supervision - Reddit Gaming signals (8 signals), no manual labels
-2. **Stage 2**: Supervised Balanced - Kaggle dataset + undersampling
-3. **Stage 3a**: Focal Loss - Handle imbalance with α=0.25, γ=2.0
-4. **Stage 3b**: Class Weighting - Alternative imbalance handling
-5. **Stage 4**: Final Comparison - Comprehensive analysis
+**Stage 1**: Weak Supervision - Reddit Gaming signals (8 signals), no manual labels → **86.70% on Reddit**
+
+**Stage 1-X**: Cross-Evaluation - Stage 1 model tested on Kaggle → **47.88% (generalization gap!)**
+
+**Stage 2**: Supervised Balanced - Kaggle dataset + undersampling → **79.44%**
+
+**Stage 3a**: Focal Loss - Handle imbalance with α=0.25, γ=2.0 → **82.35% (BEST)**
+
+**Stage 3b**: Class Weighting - Alternative imbalance handling → **81.89%**
+
+**Stage 4**: Final Comparison - Comprehensive analysis of all stages
 
 ## ✨ Tính năng chính
 
-### 🎮 Stage 1: Weak Supervision
+### 🎮 Stage 1: Weak Supervision (Reddit)
 - **8 Signals**: Awards, Comments, Upvote Ratio, Score, Text, Sarcasm, flair, top comments
 - **No Labels Needed**: Auto-generate from Reddit signals
-- **Fast**: 8 min training, 68.88% accuracy, 3,847 samples
+- **Results**: 19 min training, **86.70% accuracy** on Reddit, 2,204 samples
+- **Issue**: Only **47.88% on Kaggle** (domain shift!)
 
 ### 📚 Stage 2: Supervised Balanced
-- **Undersampling**: Balance classes (23K → 12K samples)
-- **Mid-Range**: 10 min training, 84.67% accuracy
-- **Trade-off**: Data loss for balanced performance
+- **Undersampling**: Balance classes (23,189 → 12,216 samples)
+- **Results**: 51 min training, **79.44% accuracy**, 0.793 F1-score
+- **Trade-off**: Loses 47% of data for balanced performance
 
-### 🔥 Stage 3a: Focal Loss
-- **Full Dataset**: 23,189 samples (no undersampling)
-- **Best Accuracy**: 86.75% accuracy, 86.84% F1-score
-- **Slow**: 109 min training, α=0.25, γ=2.0
+### 🔥 Stage 3a: Focal Loss (BEST)
+- **Full Dataset**: 23,189 samples (no data loss!)
+- **Best Accuracy**: **82.35% accuracy**, 0.823 F1-score
+- **Fastest**: 36 min training, α=0.25, γ=2.0
+- **Winner**: Beats balancing by +2.91% with full data
 
 ### ⚖️ Stage 3b: Class Weighting
-- **Alternative**: Weighted CrossEntropy (no Focal Loss)
+- **Alternative**: Weighted CrossEntropy (simpler than Focal Loss)
 - **Full Dataset**: 23,189 samples
-- **Compare**: vs Focal Loss performance
+- **Results**: 95 min training, **81.89% accuracy**, 0.818 F1-score
+- **Comparison**: 0.46% below Focal Loss, 2.6× slower
 
-### 📊 Stage 4: Comparison
-- **Visualizations**: Bar charts, radar plots, scatter plots
-- **Trade-offs**: Speed vs Accuracy vs Data Efficiency
-- **Recommendations**: Best approach for each scenario
+### 📊 Stage 4: Final Comparison
+- **4 Stages Analyzed**: Stage 1, 1-X, 2, 3a and 3b
+- **Visualizations**: Accuracy comparison, F1-scores, training time analysis
+- **Key Finding**: Stage 1 works on Reddit but fails cross-domain; Focal Loss optimal for Kaggle
 
 ## 📁 Cấu trúc thư mục
 
 ```
 sentiment-analysis-project/
-├── Notebook/                       # 🎯 5 Jupyter notebooks
-│   ├── stage1_weak_supervision.ipynb              # Weak Supervision
-│   ├── stage2.ipynb                               # Balanced Supervised
-│   ├── stage3_supervised_focal_loss.ipynb         # Focal Loss
-│   ├── stage3_supervised_class_weighting.ipynb    # Class Weighting
-│   └── stage4_final_comparison.ipynb              # Final Comparison
+├── Notebook/                       # 🎯 5 Jupyter notebooks (All Stages Complete ✅)
+│   ├── stage1_weak_supervision.ipynb           # Stage 1: Weak Supervision (86.70% Reddit)
+│   ├── stage2.ipynb                            # Stage 2: Balanced (79.44%)
+│   ├── stage3a_supervised_focal_loss.ipynb     # Stage 3a: Focal Loss (82.35% BEST)
+│   ├── Stage3b_supervised_class_weight.ipynb   # Stage 3b: Class Weighting (81.89%)
+│   └── stage4_final_comparison.ipynb           # Stage 4: Final Comparison
 │
 ├── data/                           # 📊 Dataset
-│   └── 23k_r_gaming_comments_sentiments.csv
+│   ├── 23k_r_gaming_comments_sentiments.csv    # Kaggle dataset (23,189 samples)
+│   └── cleaned_comments.csv                     # Stage 1 Reddit data (2,204 samples)
 │
-├── results/                        # 📈 JSON results
-│   ├── stage1_results.json
-│   ├── stage2_results.json        # TODO: Upload from Colab
-│   ├── stage3_results.json        # Stage 3a: Focal Loss
-│   └── stage3_weighted_results.json # TODO: Stage 3b training
+├── results/                        # 📈 JSON results (All Complete ✅)
+│   ├── stage1_results.json                      # 86.70% (Reddit)
+│   ├── stage1_cross_eval_results.json           # 47.88% (Kaggle cross-eval)
+│   ├── stage2_results.json                      # 79.44% (Balanced)
+│   ├── stage3a_results.json                     # 82.35% (Focal Loss)
+│   ├── stage3b_results.json                     # 81.89% (Class Weighting)
+│   ├── stage4_analysis_summary.json             # Stage 4 summary
+│   └── stage4_comparison_table.csv              # Stage 4 comparison table
 │
 ├── documentation/                  # 📄 Analysis documents
-│   ├── RESULTS_ANALYSIS.md       # Stage 1 vs 3a comparison
-│   └── PROJECT_STATUS.md         # Project status tracker
+│   ├── RESULTS_ANALYSIS.md                      # Detailed all stage analysis
+│   └── PROJECT_STATUS.md                        # Project completion status
 │
 ├── README.md                      # 📖 This file
 ├── requirements.txt               # 📦 Dependencies
@@ -183,8 +234,8 @@ jupyter notebook
 - Project Link: [https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo](https://github.com/ThanhCongNguyen-2310373/Sentiment_Analysis_Demo)
 
 
-**📅 Last Updated**: November 12, 2025  
-**🔬 Research Focus**: Weak Supervision vs Supervised Learning for Gaming Sentiment Analysis  
+**📅 Last Updated**: December 3, 2025  
+**🔬 Research Focus**: Weak Supervision vs Supervised Learning for Gaming Sentiment Analysis
 
 ---
 
