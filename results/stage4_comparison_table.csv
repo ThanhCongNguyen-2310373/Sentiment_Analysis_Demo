@@ -1,0 +1,11 @@
+Stage,Method,Accuracy (%),F1-Score (%),Training Time (min),Dataset,Test Set,Manual Labels,Train Size
+"Stage 1
+(Reddit Test)",Weak Supervision (Reddit Gaming),86.69623059866962,86.63516478642114,19.158351666666665,Reddit Gaming Posts,Reddit,No,2102
+"Stage 3a
+(Focal Loss)",Supervised Learning (Focal Loss + Imbalanced),82.34575442883323,82.285327722533,35.85824,Kaggle Game Reviews,Kaggle,Yes,15274
+"Stage 3b
+(Class Weight)",Class Weighting,81.88759926695174,81.83361721617241,95.21591833333333,Kaggle Game Reviews,Kaggle,Yes,15274
+"Stage 2
+(Balanced)",Supervised Learning (Fine-tune on balanced dataset),79.43770672546859,79.44949310379124,51.452374999999996,Kaggle Game Reviews,Kaggle,Yes,8465
+"Stage 1
+(Kaggle Test)",Weak Supervision,47.88048210439485,44.01229632484834,0.0,Kaggle (Human Labeled),Kaggle (Human Labeled),No (Weak),0

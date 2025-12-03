@@ -1,0 +1,79 @@
+{
+  "comparison_summary": [
+    {
+      "Stage": "Stage 1\n(Reddit Test)",
+      "Method": "Weak Supervision (Reddit Gaming)",
+      "Accuracy (%)": 86.69623059866962,
+      "F1-Score (%)": 86.63516478642114,
+      "Training Time (min)": 19.158351666666665,
+      "Dataset": "Reddit Gaming Posts",
+      "Test Set": "Reddit",
+      "Manual Labels": "No",
+      "Train Size": 2102
+    },
+    {
+      "Stage": "Stage 3a\n(Focal Loss)",
+      "Method": "Supervised Learning (Focal Loss + Imbalanced)",
+      "Accuracy (%)": 82.34575442883323,
+      "F1-Score (%)": 82.285327722533,
+      "Training Time (min)": 35.85824,
+      "Dataset": "Kaggle Game Reviews",
+      "Test Set": "Kaggle",
+      "Manual Labels": "Yes",
+      "Train Size": 15274
+    },
+    {
+      "Stage": "Stage 3b\n(Class Weight)",
+      "Method": "Class Weighting",
+      "Accuracy (%)": 81.88759926695174,
+      "F1-Score (%)": 81.83361721617241,
+      "Training Time (min)": 95.21591833333333,
+      "Dataset": "Kaggle Game Reviews",
+      "Test Set": "Kaggle",
+      "Manual Labels": "Yes",
+      "Train Size": 15274
+    },
+    {
+      "Stage": "Stage 2\n(Balanced)",
+      "Method": "Supervised Learning (Fine-tune on balanced dataset)",
+      "Accuracy (%)": 79.43770672546859,
+      "F1-Score (%)": 79.44949310379124,
+      "Training Time (min)": 51.452374999999996,
+      "Dataset": "Kaggle Game Reviews",
+      "Test Set": "Kaggle",
+      "Manual Labels": "Yes",
+      "Train Size": 8465
+    },
+    {
+      "Stage": "Stage 1\n(Kaggle Test)",
+      "Method": "Weak Supervision",
+      "Accuracy (%)": 47.88048210439485,
+      "F1-Score (%)": 44.01229632484834,
+      "Training Time (min)": 0.0,
+      "Dataset": "Kaggle (Human Labeled)",
+      "Test Set": "Kaggle (Human Labeled)",
+      "Manual Labels": "No (Weak)",
+      "Train Size": 0
+    }
+  ],
+  "best_performers": {
+    "highest_accuracy": {
+      "stage": "Stage 1\n(Reddit Test)",
+      "value": 86.69623059866962
+    },
+    "highest_f1": {
+      "stage": "Stage 1\n(Reddit Test)",
+      "value": 86.63516478642114
+    },
+    "fastest_training": {
+      "stage": "Stage 1\n(Kaggle Test)",
+      "value": 0.0
+    }
+  },
+  "recommendations": {
+    "rapid_prototyping": "Stage 1 (Weak Supervision)",
+    "balanced_performance": "Stage 2 (Balanced Supervised)",
+    "highest_accuracy": "Stage 3 (Focal Loss or Class Weighting)",
+    "hybrid_approach": "Stage 1 \u2192 Human Verify \u2192 Stage 3"
+  }
+}

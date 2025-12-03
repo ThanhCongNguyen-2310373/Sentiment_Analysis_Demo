@@ -1,14 +1,14 @@
-# 📊 Results Analysis: Stage 1 vs Stage 3a
+# 📊 Results Analysis: All Stages Comparison
 
 ## 🎯 Quick Comparison
 
-| Metric | Stage 1: Weak | Stage 3a: Focal Loss | Δ |
-|--------|---------------|----------------------|---|
-| **Accuracy** | 68.88% | **86.75%** | +17.87% ⬆️ |
-| **F1-Score** | 68.70% | **86.84%** | +18.14% ⬆️ |
-| **Dataset** | 3,847 | 23,189 | +503% |
-| **Training Time** | 8 min | 109 min | +13.6x |
-| **Manual Labels** | ❌ No | ✅ Yes | - |
+| Stage | Method | Accuracy | F1-Score | Time | Test Set |
+|-------|--------|----------|----------|------|----------|
+| **1** | Weak Supervision | 86.70% | 86.64% | 19 min | Reddit |
+| **1-X** | Weak (Cross-Eval) | 47.88% | 44.01% | - | Kaggle |
+| **2** | Balanced | 79.44% | 79.45% | 51 min | Kaggle |
+| **3a** | Focal Loss | **82.35%** | **82.29%** | 36 min | Kaggle |
+| **3b** | Class Weighting | 81.89% | 81.83% | 95 min | Kaggle |
 
 ---
 
@@ -22,38 +22,26 @@
 
 ### **🔍 Weak Labeling Strategy:**
 
-**6 Signals Được Sử Dụng:**
-1. **Awards** - Số lượng awards (weight: 4.0)
-2. **Comments** - Engagement của cộng đồng (weight: 3.0)
-3. **Upvote Ratio** - Tỷ lệ upvote (weight: 2.5)
-4. **Score** - Điểm tổng thể (weight: 2.0)
-5. **Gaming Text Features** - Phân tích văn bản gaming-specific (weight: 1.8)
-6. **Sarcasm Detection** - Phát hiện châm biếm (flip sentiment)
-7. **flair** - Post category indicators
-8. **top comments** - Community response sentiment
-
 **Chất Lượng Weak Labels:**
-- ✅ Labeled samples: 2,204 / 3,847 (57.3%)
-- ✅ Average confidence: **78.7%**
-- ✅ Min confidence threshold: 60%
+- ✅ Labeled: 3,003 / 5,890 (51%)
+- ✅ Avg confidence: **78%**
+- ✅ Min threshold: 60%
 
 ### **📊 Kết Quả Performance:**
-- **Accuracy**: **68.88%**
-- **F1-Score**: **68.70%**
-- **Training Time**: 477 seconds (~8 phút)
+- **Reddit test**: 86.70% accuracy, 86.64% F1
+- **Kaggle test**: 47.88% accuracy, 44.01% F1
+- **Training Time**: 19 min
 
 ### **🎯 Ưu Điểm:**
-✅ **Không cần manual labeling** - Tự động tạo labels từ Reddit signals  
-✅ **Gaming-domain specific** - Tận dụng gaming subreddits và keywords  
-✅ **Fast training** - Chỉ 8 phút training time  
-✅ **High confidence labels** - 78.7% average confidence  
-✅ **Community signals** - Tận dụng upvotes, awards, comments từ cộng đồng gaming  
+✅ No manual labeling  
+✅ Gaming-domain specific  
+✅ High accuracy on Reddit (86.70%)  
+✅ Fast training (19 min)
 
 ### **⚠️ Nhược Điểm:**
-❌ **Accuracy thấp hơn** - 68.88% so với 86.75% của Stage 3  
-❌ **Dataset nhỏ** - Chỉ 3,847 samples vs 23,189 của Stage 3  
-❌ **Noisy labels** - Weak supervision có thể tạo ra labels không chính xác  
-❌ **Limited by Reddit signals** - Phụ thuộc vào quality của Reddit community voting  
+❌ Poor generalization (47.88% on Kaggle)  
+❌ Domain-specific (Reddit only)  
+❌ Noisy weak labels  
 
 ---
 
@@ -61,30 +49,84 @@
 
 ### **Approach:**
 - **Method**: Focal Loss (α=0.25, γ=2.0)
-- **Dataset**: 23,189 Kaggle reviews (full imbalanced)
-- **Imbalance**: 2.46:1 ratio (positive:negative)
+## 📊 Stage 2: Balanced Supervised
+
+### **Approach:**
+- **Method**: Undersampling balanced dataset
+- **Dataset**: 21,821 Kaggle reviews
+- **Train**: 8,465 samples (balanced)
 
 ### **Results:**
-- **Accuracy**: 86.75%
-- **F1-Score**: 86.84%
-- **Training**: 109 min
+- **Accuracy**: 79.44%
+- **F1-Weighted**: 79.45%, F1-Macro: 79.45%
+- **Training**: 51 min
 
-### **🎯 Ưu Điểm:**
-✅ **High accuracy** - 86.75% accuracy (cao hơn 17.87% so với Stage 1)  
-✅ **Large dataset** - 23,189 pre-labeled samples  
-✅ **Clean labels** - Human-labeled Kaggle dataset  
-✅ **Focal Loss handles imbalance** - Tối ưu cho imbalanced classes  
-✅ **Better generalization** - F1-score 86.84% cho thấy balanced performance  
-
-### **⚠️ Nhược Điểm:**
-❌ **Requires manual labels** - Cần pre-labeled dataset  
-❌ **Long training time** - 109 phút (13.7x chậm hơn Stage 1)  
-❌ **Not domain-specific** - General game reviews, không focus gaming community  
-❌ **Class imbalance** - Negative class chỉ chiếm 17.6%  
+### **🎯 Key Points:**
+✅ Balanced class performance  
+⚠️ Lower accuracy than Stage 3  
+⚠️ Data loss from undersampling
 
 ---
 
+## 🔥 Stage 3a: Focal Loss
 
+### **Approach:**
+- **Method**: Focal Loss (α=0.25, γ=2.0)
+- **Dataset**: 21,821 Kaggle (full, imbalanced)
+## 🎯 Final Recommendations
+
+### **Choose Stage Based on Scenario:**
+
+**🚀 Prototyping / No Labels:**
+- Use **Stage 1** (86.70% on Reddit)
+- Fast, no labeling cost
+- Good for gaming community
+
+**⚖️ Balanced Performance:**
+- Use **Stage 2** (79.44%)
+- Equal class performance
+- Simpler baseline
+
+**🏆 Best Accuracy / Production:**
+- Use **Stage 3a** (82.35%)
+- Best on Kaggle dataset
+- Fast training (36 min)
+
+**🔬 Research / Comparison:**
+- Use **Stage 3b** (81.89%)
+- Alternative to Focal Loss
+- Similar performance
+
+### **Key Insights:**
+
+1. **Weak Supervision** excels on same domain (Reddit) but struggles on different distribution (Kaggle)
+2. **Focal Loss** (3a) slightly better than **Class Weighting** (3b) with faster training
+3. **Stage 2** balanced approach trades accuracy for equal class performance
+4. **Best production choice**: Stage 3a (82.35% accuracy, 36 min training)
+
+---
+
+**📅 Updated**: December 3, 2025  
+**📊 Data**: All 5 result files complete
+
+---
+
+## ⚖️ Stage 3b: Class Weighting
+
+### **Approach:**
+- **Method**: Class weights in loss function
+- **Dataset**: 21,821 Kaggle (full, imbalanced)
+- **Train**: 15,274 samples
+
+### **Results:**
+- **Accuracy**: 81.89%
+- **F1-Weighted**: 81.83%, F1-Macro: 79.55%
+- **Training**: 95 min (slower)
+
+### **🎯 Key Points:**
+✅ Comparable to Focal Loss (-0.46%)  
+✅ Simpler implementation  
+⚠️ Longer training time
 ## 🚀 Next Steps
 
 ### **Stage 3a/3b Comparison:**

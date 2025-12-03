@@ -1,0 +1,8 @@
+{
+  "stage": "1_cross_eval",
+  "eval_dataset": "Kaggle (Human Labeled)",
+  "model_source": "Stage 1 (Weak Supervision)",
+  "real_accuracy": 0.4788048210439485,
+  "real_f1_weighted": 0.44012296324848343,
+  "note": "This metric shows how well Weak Supervision generalizes to human-labeled data"
+}

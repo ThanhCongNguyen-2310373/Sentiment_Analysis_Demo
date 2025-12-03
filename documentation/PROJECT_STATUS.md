@@ -1,7 +1,7 @@
 # 🎯 Project Status
 
-**Last Updated**: November 12, 2025  
-**Status**: 4/5 Stages Complete ✅
+**Last Updated**: December 3, 2025  
+**Status**: All Stages Complete ✅
 
 ---
 
@@ -9,75 +9,73 @@
 
 | Stage | Method | Accuracy | Time | Status |
 |-------|--------|----------|------|--------|
-| **1** | Weak Supervision | 68.88% | 8 min | ✅ Complete |
-| **2** | Balanced Supervised | 84.67% | 10 min | ✅ Complete |
-| **3a** | Focal Loss | 86.75% | 109 min | ✅ Complete |
-| **3b** | Class Weighting | TBD | ~110 min | 🔄 In Progress |
-| **4** | Final Comparison | - | - | ⏳ Awaiting 3b |
+| **1** | Weak Supervision (Reddit) | 86.70% | 19 min | ✅ Complete |
+| **1-X** | Stage 1 Cross-Eval (Kaggle) | 47.88% | - | ✅ Complete |
+| **2** | Balanced Supervised | 79.44% | 51 min | ✅ Complete |
+| **3a** | Focal Loss (α=0.25, γ=2.0) | 82.35% | 36 min | ✅ Complete |
+| **3b** | Class Weighting | 81.89% | 95 min | ✅ Complete |
+| **4** | Final Comparison | - | - | ✅ Complete |
 
 ---
 
 ## 📁 Project Files
 
 ### **Notebooks** (5 total)
-- ✅ `stage1_weak_supervision.ipynb` - Reddit weak supervision
-- ✅ `stage2.ipynb` - Balanced dataset (undersampling)
-- ✅ `stage3_supervised_focal_loss.ipynb` - Stage 3a: Focal Loss
-- 🔄 `stage3_supervised_class_weighting.ipynb` - Stage 3b: Class Weighting
-- ⏳ `stage4_final_comparison.ipynb` - Final comparison
+- ✅ `stage1_weak_supervision.ipynb` - Weak supervision + Cross-eval
+- ✅ `stage2.ipynb` - Balanced dataset  
+- ✅ `stage3a_supervised_focal_loss.ipynb` - Focal Loss
+- ✅ `stage3b_supervised_class_weight.ipynb` - Class Weighting
+- ✅ `stage4_final_comparison.ipynb` - Final comparison
 
 ### **Results** (JSON files)
-- ✅ `stage1_results.json` - Weak supervision results
-- ⚠️ `stage2_results.json` - **TODO: Upload from Colab**
-- ✅ `stage3_results.json` - Stage 3a: Focal Loss results
-- ⏳ `stage3_weighted_results.json` - Stage 3b: Pending training
+- ✅ `stage1_results.json` - Reddit test (86.70%)
+- ✅ `stage1_cross_eval_results.json` - Kaggle test (47.88%)
+- ✅ `stage2_results.json` - Balanced (79.44%)
+- ✅ `stage3a_results.json` - Focal Loss (82.35%)
+- ✅ `stage3b_results.json` - Class Weighting (81.89%)
 
 ### **Documentation**
-- ✅ `README.md` - Project overview (5-stage pipeline)
-- ✅ `RESULTS_ANALYSIS.md` - Stage 1 vs 3a comparison
+- ✅ `README.md` - Project overview
+- ✅ `RESULTS_ANALYSIS.md` - Updated results
 - ✅ `PROJECT_STATUS.md` - This file
-
----
-
-## 🎯 Next Steps
-
-1. ⚠️ Upload `stage2_results.json` from Colab
-2. 🔄 Complete Stage 3b training (Class Weighting)
-3. 📊 Run Stage 4 comparison with all results
-
 
 ---
 
 ## 💡 Key Findings
 
 ### **Stage 1: Weak Supervision** ✅
-- ✅ No manual labels
-- ✅ Fast (8 min)
-- ⚠️ Lower accuracy (68.88%)
+- ✅ No manual labels required
+- ✅ 86.70% on Reddit test (same domain)
+- ⚠️ 47.88% on Kaggle test (generalization gap)
+- ✅ Fast training (19 min)
 
-### **Stage 2: Balanced** ✅
-- ✅ Good balance (84.67%)
-- ✅ Fast (10 min)
-- ⚠️ Data loss (23K→12K)
+### **Stage 2: Balanced Supervised** ✅
+- ✅ 79.44% accuracy
+- ✅ Balanced performance across classes
+- ⚠️ Data undersampling reduces dataset
 
 ### **Stage 3a: Focal Loss** ✅
-- ✅ Best accuracy (86.75%)
-- ✅ Full dataset (23K)
-- ⚠️ Slow (109 min)
+- ✅ 82.35% accuracy (best on Kaggle)
+- ✅ Handles class imbalance well
+- ✅ Fast training (36 min)
 
-### **Stage 3b: Class Weighting** 🔄
-- 🔄 Alternative to Focal Loss
-- 🔄 Expected: ~85-87%
-- 🔄 Compare with Stage 3a
+### **Stage 3b: Class Weighting** ✅
+- ✅ 81.89% accuracy (comparable to 3a)
+- ✅ Simpler implementation
+- ⚠️ Longer training (95 min)
 
 ---
 
+## 🎯 Recommendations
+
+**Best approach depends on scenario:**
+- **Prototyping**: Stage 1 (fast, no labels)
+- **Production**: Stage 3a (best accuracy, fast)
+- **Research**: Compare all stages in Stage 4
+
+---
 
 ## 📞 Contact
 
 **GitHub**: ThanhCongNguyen-2310373  
 **Repository**: Sentiment_Analysis_Demo
-
----
-
-*Ready for Stage 3b training and final comparison*
