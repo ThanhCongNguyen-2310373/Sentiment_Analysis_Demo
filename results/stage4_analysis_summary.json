@@ -25,9 +25,9 @@
     {
       "Stage": "Stage 3b\n(Class Weight)",
       "Method": "Class Weighting",
-      "Accuracy (%)": 81.88759926695174,
-      "F1-Score (%)": 81.83361721617241,
-      "Training Time (min)": 95.21591833333333,
+      "Accuracy (%)": 82.22357971899817,
+      "F1-Score (%)": 82.22152432354537,
+      "Training Time (min)": 86.168165,
       "Dataset": "Kaggle Game Reviews",
       "Test Set": "Kaggle",
       "Manual Labels": "Yes",

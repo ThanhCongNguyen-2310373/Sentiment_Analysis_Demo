@@ -4,11 +4,11 @@
 
 | Stage | Method | Accuracy | F1-Score | Time | Test Set |
 |-------|--------|----------|----------|------|----------|
-| **1** | Weak Supervision | 86.70% | 86.64% | 19 min | Reddit |
+| **1** | Weak Supervision | 86.70% | 86.64% | 19.16 min | Reddit |
 | **1-X** | Weak (Cross-Eval) | 47.88% | 44.01% | - | Kaggle |
-| **2** | Balanced | 79.44% | 79.45% | 51 min | Kaggle |
-| **3a** | Focal Loss | **82.35%** | **82.29%** | 36 min | Kaggle |
-| **3b** | Class Weighting | 81.89% | 81.83% | 95 min | Kaggle |
+| **2** | Balanced | 79.44% | 79.45% | 51.45 min | Kaggle |
+| **3a** | Focal Loss | **82.35%** | **82.29%** | 35.86 min | Kaggle |
+| **3b** | Class Weighting | **82.22%** | **82.22%** | 86.17 min | Kaggle |
 
 ---
 
@@ -30,7 +30,7 @@
 ### **📊 Kết Quả Performance:**
 - **Reddit test**: 86.70% accuracy, 86.64% F1
 - **Kaggle test**: 47.88% accuracy, 44.01% F1
-- **Training Time**: 19 min
+- **Training Time**: 19.16 min
 
 ### **🎯 Ưu Điểm:**
 ✅ No manual labeling  
@@ -59,7 +59,7 @@
 ### **Results:**
 - **Accuracy**: 79.44%
 - **F1-Weighted**: 79.45%, F1-Macro: 79.45%
-- **Training**: 51 min
+- **Training**: 51.45 min
 
 ### **🎯 Key Points:**
 ✅ Balanced class performance  
@@ -90,7 +90,7 @@
 **🏆 Best Accuracy / Production:**
 - Use **Stage 3a** (82.35%)
 - Best on Kaggle dataset
-- Fast training (36 min)
+- Fast training (35.86 min)
 
 **🔬 Research / Comparison:**
 - Use **Stage 3b** (81.89%)
@@ -106,7 +106,7 @@
 
 ---
 
-**📅 Updated**: December 3, 2025  
+**📅 Updated**: December 14, 2025  
 **📊 Data**: All 5 result files complete
 
 ---
@@ -119,14 +119,14 @@
 - **Train**: 15,274 samples
 
 ### **Results:**
-- **Accuracy**: 81.89%
-- **F1-Weighted**: 81.83%, F1-Macro: 79.55%
-- **Training**: 95 min (slower)
+- **Accuracy**: 82.22%
+- **F1-Weighted**: 82.22%, F1-Macro: 80.04%
+- **Training**: 86.17 min (slower)
 
 ### **🎯 Key Points:**
-✅ Comparable to Focal Loss (-0.46%)  
+✅ Comparable to Focal Loss (-0.13%)  
 ✅ Simpler implementation  
-⚠️ Longer training time
+⚠️ Longer training time (2.4× slower)
 ## 🚀 Next Steps
 
 ### **Stage 3a/3b Comparison:**
@@ -141,5 +141,5 @@
 
 ---
 
-**📅 Updated**: November 12, 2025  
+**📅 Updated**: December 14, 2025  
 **� Data**: stage1_results.json & stage3_results.json (Stage 3a)

@@ -1,6 +1,6 @@
 # 🎯 Project Status
 
-**Last Updated**: December 3, 2025  
+**Last Updated**: December 14, 2025  
 **Status**: All Stages Complete ✅
 
 ---
@@ -9,11 +9,11 @@
 
 | Stage | Method | Accuracy | Time | Status |
 |-------|--------|----------|------|--------|
-| **1** | Weak Supervision (Reddit) | 86.70% | 19 min | ✅ Complete |
+| **1** | Weak Supervision (Reddit) | 86.70% | 19.16 min | ✅ Complete |
 | **1-X** | Stage 1 Cross-Eval (Kaggle) | 47.88% | - | ✅ Complete |
-| **2** | Balanced Supervised | 79.44% | 51 min | ✅ Complete |
-| **3a** | Focal Loss (α=0.25, γ=2.0) | 82.35% | 36 min | ✅ Complete |
-| **3b** | Class Weighting | 81.89% | 95 min | ✅ Complete |
+| **2** | Balanced Supervised | 79.44% | 51.45 min | ✅ Complete |
+| **3a** | Focal Loss (α=0.25, γ=2.0) | 82.35% | 35.86 min | ✅ Complete |
+| **3b** | Class Weighting | 82.22% | 86.17 min | ✅ Complete |
 | **4** | Final Comparison | - | - | ✅ Complete |
 
 ---
@@ -32,7 +32,7 @@
 - ✅ `stage1_cross_eval_results.json` - Kaggle test (47.88%)
 - ✅ `stage2_results.json` - Balanced (79.44%)
 - ✅ `stage3a_results.json` - Focal Loss (82.35%)
-- ✅ `stage3b_results.json` - Class Weighting (81.89%)
+- ✅ `stage3b_results.json` - Class Weighting (82.22%)
 
 ### **Documentation**
 - ✅ `README.md` - Project overview
@@ -47,7 +47,7 @@
 - ✅ No manual labels required
 - ✅ 86.70% on Reddit test (same domain)
 - ⚠️ 47.88% on Kaggle test (generalization gap)
-- ✅ Fast training (19 min)
+- ✅ Fast training (19.16 min)
 
 ### **Stage 2: Balanced Supervised** ✅
 - ✅ 79.44% accuracy
@@ -57,12 +57,12 @@
 ### **Stage 3a: Focal Loss** ✅
 - ✅ 82.35% accuracy (best on Kaggle)
 - ✅ Handles class imbalance well
-- ✅ Fast training (36 min)
+- ✅ Fast training (35.86 min)
 
 ### **Stage 3b: Class Weighting** ✅
-- ✅ 81.89% accuracy (comparable to 3a)
+- ✅ 82.22% accuracy (comparable to 3a, -0.13%)
 - ✅ Simpler implementation
-- ⚠️ Longer training (95 min)
+- ⚠️ Longer training (86.17 min, 2.4× slower)
 
 ---
 
