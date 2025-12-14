@@ -88,8 +88,8 @@ sentiment-analysis-project/
 │   ├── stage2_results.json                      # 79.44% (Balanced)
 │   ├── stage3a_results.json                     # 82.35% (Focal Loss)
 │   ├── stage3b_results.json                     # 82.22% (Class Weighting)
-│   ├── stage4_analysis_summary.json             # Stage 4 summary
-│   └── stage4_comparison_table.csv              # Stage 4 comparison table
+│   └── stage4_analysis_summary.json             # Stage 4 summary
+│   
 │
 ├── documentation/                  # 📄 Analysis documents
 │   ├── RESULTS_ANALYSIS.md                      # Detailed all stage analysis
